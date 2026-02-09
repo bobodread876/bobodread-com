@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Media & Writing — Dread</title>
+  <meta name="description" content="Podcasts, talks, interviews, and articles by Jabari Ennis (Dread) on Bitcoin, freedom tech, and the Caribbean.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #FDFBF7;
+      --text: #1a1a1a;
+      --text-muted: #666;
+      --accent: #E07A5F;
+      --accent-hover: #c96a52;
+      --card-bg: #ffffff;
+      --card-border: #eee;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+      --radius: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+    
+    /* Header */
+    .header {
+      margin-bottom: 2.5rem;
+    }
+    
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+    
+    .back-link:hover {
+      color: var(--accent);
+    }
+    
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    
+    .page-desc {
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+    
+    /* Sections */
+    .section {
+      margin-bottom: 3rem;
+    }
+    
+    .section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--card-border);
+    }
+    
+    /* Media Items */
+    .media-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .media-item {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s;
+      display: block;
+    }
+    
+    .media-item:hover {
+      box-shadow: var(--shadow);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+    
+    .media-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .media-item-title {
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    
+    .media-item-date {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+    
+    .media-item-source {
+      font-size: 0.85rem;
+      color: var(--accent);
+      margin-bottom: 0.25rem;
+    }
+    
+    .media-item-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    
+    .media-item-type {
+      display: inline-block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      color: var(--text-muted);
+      margin-top: 0.75rem;
+    }
+    
+    /* Archive Section */
+    .archive {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+    
+    .archive-title {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+    
+    .archive-section {
+      margin-bottom: 1.5rem;
+    }
+    
+    .archive-section-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .archive-list {
+      list-style: none;
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+    
+    .archive-list a {
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    
+    .archive-list a:hover {
+      color: var(--accent);
+    }
+    
+    .archive-list .date {
+      color: #999;
+      font-size: 0.7rem;
+    }
+    
+    /* Footer */
+    footer {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--card-border);
+    }
+    
+    footer a {
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+    
+    footer a:hover {
+      color: var(--accent);
+    }
+    
+    /* Responsive */
+    @media (max-width: 480px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+      
+      .page-title {
+        font-size: 1.75rem;
+      }
+      
+      .media-item-header {
+        flex-direction: column;
+        gap: 0.25rem;
+      }
+      
+      .media-item-date {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Header -->
+    <header class="header">
+      <a href="./index.html" class="back-link">← Back to home</a>
+      <h1 class="page-title">Media & Writing</h1>
+      <p class="page-desc">Featured podcasts, conference talks, and press coverage.</p>
+    </header>
+    
+    <!-- Press -->
+    <section class="section">
+      <h2 class="section-title">📰 Press</h2>
+      <div class="media-list">
+        
+        <a href="https://www.forbes.com/sites/frankcorva/2025/11/20/jamaicas-first-native-bitcoin-app-is-helping-with-hurricane-relief/" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">Jamaica's First Native Bitcoin App Is Helping With Hurricane Relief</div>
+            <span class="media-item-date">Nov 2025</span>
+          </div>
+          <div class="media-item-source">Forbes</div>
+          <p class="media-item-desc">Coverage of Flash's role in disaster relief and financial resilience in the Caribbean.</p>
+          <span class="media-item-type">Feature</span>
+        </a>
+        
+        <a href="https://medium.com/breez-technology/building-on-lightning-flash-is-reinventing-caribbean-money-with-the-breez-sdk-d26ef8b81fb8" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">Building on Lightning: Flash Is Reinventing Caribbean Money with the Breez SDK</div>
+            <span class="media-item-date">Jan 2024</span>
+          </div>
+          <div class="media-item-source">Breez Technology</div>
+          <p class="media-item-desc">Technical deep-dive into how Flash uses Lightning infrastructure to serve the Caribbean.</p>
+          <span class="media-item-type">Article</span>
+        </a>
+        
+      </div>
+    </section>
+    
+    <!-- Podcasts -->
+    <section class="section">
+      <h2 class="section-title">🎙️ Podcasts</h2>
+      <div class="media-list">
+        
+        <a href="https://www.youtube.com/watch?v=Sujfz1pESVc" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">Why CBDCs are Failing & Bitcoin is Winning</div>
+            <span class="media-item-date">Nov 2024</span>
+          </div>
+          <div class="media-item-source">Bitcoin Fundamentals (Preston Pysh)</div>
+          <p class="media-item-desc">Discussion on the failure of CBDCs, Bitcoin's success in emerging markets, and the future of money in the Caribbean.</p>
+          <span class="media-item-type">Podcast</span>
+        </a>
+        
+        <a href="https://youtube.com/watch?v=SpeCEBMCg0w" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">How Dread is Leading Financial Revolution in the Caribbean with Bitcoin</div>
+            <span class="media-item-date">2024</span>
+          </div>
+          <div class="media-item-source">Africa Bitcoin Conference Podcast</div>
+          <p class="media-item-desc">57-minute conversation on building Bitcoin infrastructure and community across island nations.</p>
+          <span class="media-item-type">Podcast</span>
+        </a>
+        
+        <a href="https://youtube.com/watch?v=6-WkorrmfCg" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">Could Bitcoin REALLY Replace The Jamaican Dollar in 10 Years?</div>
+            <span class="media-item-date">Dec 2024</span>
+          </div>
+          <div class="media-item-source">Money Talk Ja</div>
+          <p class="media-item-desc">Local Jamaican perspective on Bitcoin adoption, Flash, and the future of money on the island.</p>
+          <span class="media-item-type">Podcast</span>
+        </a>
+        
+      </div>
+    </section>
+    
+    <!-- Talks -->
+    <section class="section">
+      <h2 class="section-title">🎤 Talks</h2>
+      <div class="media-list">
+        
+        <a href="https://youtube.com/watch?v=BUQBwudHyNM" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">Why Bitcoin Matters for Human Rights</div>
+            <span class="media-item-date">2021</span>
+          </div>
+          <div class="media-item-source">Human Rights Foundation</div>
+          <p class="media-item-desc">Short, powerful talk on Bitcoin as a tool for financial freedom and human rights.</p>
+          <span class="media-item-type">Talk · 4 min</span>
+        </a>
+        
+        <a href="https://youtube.com/watch?v=KCXDw9VOnFo" class="media-item" target="_blank" rel="noopener">
+          <div class="media-item-header">
+            <div class="media-item-title">My Journey as an International Bitcoin Advocate</div>
+            <span class="media-item-date">2022</span>
+          </div>
+          <div class="media-item-source">BitBlockBoom (Austin, TX)</div>
+          <p class="media-item-desc">From pole vaulter to Bitcoin builder — the origin story of Island Bitcoin and Flash.</p>
+          <span class="media-item-type">Conference Talk · 21 min</span>
+        </a>
+        
+      </div>
+    </section>
+    
+    <!-- Full Archive -->
+    <section class="archive">
+      <h2 class="archive-title">Full Archive</h2>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">Press & Media Coverage</h3>
+        <ul class="archive-list">
+          <li><a href="https://www.forbes.com/sites/frankcorva/2025/11/20/jamaicas-first-native-bitcoin-app-is-helping-with-hurricane-relief/">Jamaica's First Native Bitcoin App Is Helping With Hurricane Relief</a> <span class="date">— Forbes, Nov 2025</span></li>
+          <li><a href="https://medium.com/breez-technology/building-on-lightning-flash-is-reinventing-caribbean-money-with-the-breez-sdk-d26ef8b81fb8">Building on Lightning: Flash Is Reinventing Caribbean Money</a> <span class="date">— Breez, Jan 2024</span></li>
+          <li><a href="https://www.blink.sv/blog/how-bitcoin-adoption-came-to-the-caribbean">How Bitcoin Adoption Came To The Caribbean</a> <span class="date">— Blink</span></li>
+          <li><a href="https://www.blackbitcoinbillionaire.com/untitled-15/">From Kingston to the World: Bobo Dread's Bitcoin Odyssey</a> <span class="date">— Black Bitcoin Billionaire, Sep 2023</span></li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">Conference Talks</h3>
+        <ul class="archive-list">
+          <li><a href="https://afrobitcoin.sched.com/">Panel: Bitcoin powered vs traditional payment systems</a> <span class="date">— Africa Bitcoin Conference, 2025</span></li>
+          <li><a href="https://youtube.com/watch?v=KCXDw9VOnFo">My Journey as an International Bitcoin Advocate</a> <span class="date">— BitBlockBoom, 2022</span></li>
+          <li><a href="https://youtube.com/watch?v=ljJmv8XpkdE">Rastafari, Jamaica, Reggae and Bitcoin</a> <span class="date">— BitBlockBoom, 2021</span></li>
+          <li><a href="https://youtube.com/watch?v=BUQBwudHyNM">Why Bitcoin Matters for Human Rights</a> <span class="date">— Human Rights Foundation, 2021</span></li>
+          <li><a href="https://youtube.com/watch?v=sAj-ZwEuh4Q">How Bitcoin Will Help Jamaica Abolish Bank Slavery</a> <span class="date">— Live From Bitcoin Beach, 2024</span></li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">Podcast Appearances</h3>
+        <ul class="archive-list">
+          <li><a href="https://www.youtube.com/watch?v=Sujfz1pESVc">Why CBDCs are Failing & Bitcoin is Winning</a> <span class="date">— Bitcoin Fundamentals (Preston Pysh), Nov 2024</span></li>
+          <li><a href="https://youtube.com/watch?v=SpeCEBMCg0w">How Dread is Leading Financial Revolution in the Caribbean</a> <span class="date">— ABC Podcast, 2024</span></li>
+          <li><a href="https://youtube.com/watch?v=6-WkorrmfCg">Could Bitcoin REALLY Replace The Jamaican Dollar?</a> <span class="date">— Money Talk Ja, Dec 2024</span></li>
+          <li><a href="https://youtube.com/watch?v=t8EwNmUahUQ">Unhinging CBDC's in Jamaica</a> <span class="date">— The Bitcoin Source, Sep 2023</span></li>
+          <li><a href="https://music.amazon.com/podcasts/53d211e8-f990-4fc3-b289-baac039a3b25/episodes/f0dc9197-fe4c-4b7d-b36b-30f67a54904d/bitcoin-for-boomers-with-gary-leland-july-23-2022-w-bobo-dread">Bitcoin For Boomers</a> <span class="date">— Gary Leland, Jul 2022</span></li>
+          <li><a href="https://youtube.com/watch?v=Uy96YHvl1OY">Swan Lounge: NUMBER OF PEOPLE GO UP</a> <span class="date">— Swan Bitcoin, 2021</span></li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">One Love Bitcoin Podcast (Host)</h3>
+        <ul class="archive-list">
+          <li><a href="https://podcasts.apple.com/jm/podcast/one-love-bitcoin/id1576425654">Apple Podcasts</a> · <a href="https://open.spotify.com/show/32uTvyrpwkI8X6vNqa9wq6">Spotify</a> · <a href="https://www.youtube.com/playlist?list=PLoB1eZWSVHVaTExzWWn3mFzK7DUgkgIo_">YouTube</a> · <a href="https://www.listennotes.com/podcasts/one-love-bitcoin-dread-i_cIGevLHEF/">Listen Notes</a></li>
+          <li>19+ episodes — interviews with Bitcoiners from El Salvador, Ethiopia, Senegal, Argentina, Venezuela, Lebanon, and more</li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">Short Clips</h3>
+        <ul class="archive-list">
+          <li><a href="https://youtube.com/watch?v=fZmYssPl9z0">Jamaica Finally Has It's Own Bitcoin Lightning Wallet!</a> <span class="date">— 2024</span></li>
+          <li><a href="https://youtube.com/watch?v=V0gRQTSSyYY">What Rastafarians Really Think About Bitcoin!</a> <span class="date">— 2023</span></li>
+          <li><a href="https://youtube.com/shorts/uCe1UL7NxUI">Why Flash Wallet Could Change the Caribbean Forever!</a></li>
+          <li><a href="https://youtube.com/shorts/rQi9eTbWWF0">How Bitcoin Transformed Remittances in Jamaica!</a></li>
+          <li><a href="https://youtube.com/shorts/IF_9HecdIlA">How I Overcame Bitcoin Impostor Syndrome</a></li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">YouTube Channels</h3>
+        <ul class="archive-list">
+          <li><a href="https://youtube.com/@jabennis">@jabennis</a> — Personal</li>
+          <li><a href="https://youtube.com/@onelovebitcoin">@onelovebitcoin</a> — One Love Bitcoin Podcast</li>
+          <li><a href="https://youtube.com/@LNFlash">@LNFlash</a> — Flash Wallet</li>
+        </ul>
+      </div>
+      
+      <div class="archive-section">
+        <h3 class="archive-section-title">Profiles</h3>
+        <ul class="archive-list">
+          <li><a href="https://opensats.org/about/dread">OpenSats</a> · <a href="https://bitblockboom.com/bobo-dread/">BitBlockBoom</a> · <a href="https://worldathletics.org/athletes/jamaica/jabari-ennis-14201974">World Athletics (Pole Vault)</a></li>
+        </ul>
+      </div>
+      
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+      <p>
+        <a href="./index.html">← bobodread.com</a>
+      </p>
+    </footer>
+    
+  </div>
+</body>
+</html>
