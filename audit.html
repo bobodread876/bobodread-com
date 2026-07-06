@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Engineering Health Audit — know what you own · Jabari Ennis</title>
+  <meta name="description" content="A fixed-price, plain-language audit of your codebase: what's healthy, what's risky, what to fix first, and where AI-assisted development would pay off — delivered in days.">
+
+  <meta property="og:title" content="The Engineering Health Audit">
+  <meta property="og:description" content="You paid for the code. Do you know what you own? A fixed-price, plain-language codebase audit, delivered in days.">
+  <meta property="og:image" content="https://bobodread.com/photo.png">
+  <meta property="og:url" content="https://bobodread.com/audit.html">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏝️</text></svg>">
+
+  <style>
+    :root {
+      --paper: #f7f4ee;
+      --panel: #fffdf8;
+      --ink: #1a1913;
+      --muted: #6d675a;
+      --hairline: #e2dccc;
+      --green: #1f3a2d;
+      --green-soft: #2c4f3e;
+      --gold: #96793e;
+      --amber: #a97a2b;
+      --red: #9c3b2e;
+      --serif: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--paper);
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 19px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+    }
+    .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px; }
+    .narrow { max-width: 720px; }
+
+    a { color: var(--green); }
+    a:hover { color: var(--gold); }
+
+    .topbar {
+      font-family: var(--sans); font-size: 13px;
+      display: flex; justify-content: space-between; align-items: baseline;
+      padding: 22px 0; border-bottom: 1px solid var(--hairline);
+    }
+    .topbar .brand { color: var(--ink); text-decoration: none; letter-spacing: 0.02em; }
+    .topbar .brand strong { font-weight: 700; }
+    .topbar nav a { color: var(--muted); text-decoration: none; margin-left: 22px; }
+    .topbar nav a:hover { color: var(--ink); }
+
+    .eyebrow {
+      font-family: var(--sans); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
+    }
+
+    .hero { padding: 88px 0 56px; }
+    .hero h1 {
+      font-size: clamp(38px, 6vw, 64px); line-height: 1.08; font-weight: 500;
+      letter-spacing: -0.015em; margin: 18px 0 24px; max-width: 17ch;
+    }
+    .hero h1 em { font-style: italic; color: var(--green); }
+    .hero .lede { font-size: 22px; color: var(--muted); max-width: 34em; margin-bottom: 36px; }
+
+    .cta-row { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; font-family: var(--sans); }
+    .btn {
+      display: inline-block; text-decoration: none; font-size: 15px; font-weight: 600;
+      padding: 13px 26px; border-radius: 3px; letter-spacing: 0.01em;
+    }
+    .btn-primary { background: var(--green); color: var(--paper); border: 1px solid var(--green); }
+    .btn-primary:hover { background: var(--green-soft); color: var(--paper); }
+    .btn-ghost { color: var(--ink); border: 1px solid var(--ink); }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+    .cta-note { font-size: 13px; color: var(--muted); }
+
+    /* illustrative report panel */
+    .report-wrap { padding: 26px 0 74px; }
+    .report {
+      background: var(--panel); border: 1px solid var(--hairline); border-radius: 6px;
+      box-shadow: 0 24px 60px -32px rgba(26, 25, 19, 0.35);
+      padding: 34px 38px; max-width: 760px;
+    }
+    .report .rhead { font-family: var(--sans); font-size: 12px; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between;
+      border-bottom: 2px solid var(--ink); padding-bottom: 10px; margin-bottom: 18px; }
+    .report h3 { font-size: 24px; font-weight: 500; margin-bottom: 16px; }
+    .report table { width: 100%; border-collapse: collapse; font-family: var(--sans); font-size: 14px; }
+    .report th { text-align: left; font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); font-weight: 600; padding: 8px 10px 8px 0; border-bottom: 1px solid var(--hairline); }
+    .report td { padding: 10px 10px 10px 0; border-bottom: 1px solid var(--hairline); vertical-align: top; }
+    .report td.repo { font-weight: 600; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 7px; vertical-align: baseline; }
+    .ok { background: #3d7a55; } .warn { background: var(--amber); } .bad { background: var(--red); }
+    .report .foot { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 16px; }
+    .report-cap { font-family: var(--sans); font-size: 12.5px; color: var(--muted); margin-top: 12px; }
+
+    section { padding: 74px 0; border-top: 1px solid var(--hairline); }
+    h2 { font-size: clamp(28px, 3.6vw, 38px); font-weight: 500; line-height: 1.15;
+         letter-spacing: -0.01em; margin: 14px 0 22px; max-width: 24ch; }
+    .story p + p { margin-top: 1.2em; }
+    .story .pull { font-size: 24px; line-height: 1.45; color: var(--green); font-style: italic;
+                   border-left: 2px solid var(--gold); padding-left: 22px; margin: 1.6em 0; }
+
+    .features { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+                background: var(--hairline); border: 1px solid var(--hairline); margin-top: 34px; }
+    .feature { background: var(--panel); padding: 26px 24px 30px; }
+    .feature h3 { font-family: var(--sans); font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .feature p { font-size: 16px; color: var(--muted); line-height: 1.55; }
+
+    .own { background: var(--green); color: #efe9da; }
+    .own .eyebrow { color: #cbb37a; }
+    .own h2 { color: #f7f2e4; }
+    .own p { max-width: 38em; }
+    .own p + p { margin-top: 1.1em; }
+    .own strong { color: #fff; }
+    .own a { color: #cbb37a; }
+
+    .steps { counter-reset: step; display: grid; grid-template-columns: repeat(4, 1fr); gap: 34px; margin-top: 38px; }
+    .step { counter-increment: step; }
+    .step::before {
+      content: counter(step, decimal-leading-zero);
+      font-family: var(--sans); font-size: 13px; font-weight: 700; letter-spacing: 0.14em; color: var(--gold);
+      display: block; border-top: 2px solid var(--ink); padding-top: 12px; margin-bottom: 10px;
+    }
+    .step h3 { font-family: var(--sans); font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 15.5px; color: var(--muted); line-height: 1.55; }
+    .step .price { font-family: var(--sans); font-size: 13px; color: var(--ink); margin-top: 10px; display: block; }
+
+    .fit-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; margin-top: 10px; }
+    .fit-cols h3 { font-family: var(--sans); font-size: 13px; font-weight: 700;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .fit-cols ul { list-style: none; }
+    .fit-cols li { padding: 10px 0; border-bottom: 1px solid var(--hairline); font-size: 17px; }
+    .fit-cols .not li { color: var(--muted); font-size: 16px; }
+
+    .final { text-align: center; padding: 96px 0; }
+    .final h2 { margin: 14px auto 14px; }
+    .final .lede { color: var(--muted); max-width: 32em; margin: 0 auto 34px; }
+    .final .cta-row { justify-content: center; }
+    .final .alt { font-family: var(--sans); font-size: 14px; color: var(--muted); margin-top: 22px; }
+
+    footer { font-family: var(--sans); font-size: 13px; color: var(--muted);
+      border-top: 1px solid var(--hairline); padding: 26px 0 48px;
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    footer a { color: var(--muted); }
+
+    @media (max-width: 880px) {
+      .features { grid-template-columns: 1fr 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      body { font-size: 17px; }
+      .hero { padding: 56px 0 36px; }
+      .hero .lede { font-size: 19px; }
+      section { padding: 56px 0; }
+      .features { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 26px; }
+      .fit-cols { grid-template-columns: 1fr; gap: 36px; }
+      .report { padding: 24px 20px; }
+      .report td:nth-child(4), .report th:nth-child(4) { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="./index.html"><strong>Jabari Ennis</strong> · bobodread.com</a>
+      <nav>
+        <a href="./relationship-os.html">Bespoke builds</a>
+        <a href="mailto:hi@bobodread.com?subject=Engineering%20Audit">Email</a>
+        <a href="https://calendly.com/jabari-ennis-c7c">Book a call</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <p class="eyebrow">The Engineering Health Audit</p>
+      <h1>You paid for the code. Do you know <em>what you own</em>?</h1>
+      <p class="lede">
+        A fixed-price, plain-language audit of your codebase — every repository,
+        read and ranked. What's healthy, what's quietly rotting, what could hurt
+        you, what to fix first, and where AI could start pulling its weight.
+        Delivered in days, written so an owner can act on it.
+      </p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://calendly.com/jabari-ennis-c7c">Book the 30-minute call</a>
+        <a class="btn btn-ghost" href="mailto:hi@bobodread.com?subject=Engineering%20Audit">hi@bobodread.com</a>
+        <span class="cta-note">The call is free. Read-only access is all the audit needs.</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap report-wrap">
+    <div class="report">
+      <div class="rhead"><span>Engineering Health Audit</span><span>Repo scorecard · p.4</span></div>
+      <h3>34 repositories, ranked by risk</h3>
+      <table>
+        <tr>
+          <th>Repository</th>
+          <th>Health</th>
+          <th>Top finding</th>
+          <th>Bus factor</th>
+        </tr>
+        <tr>
+          <td class="repo">payments-api</td>
+          <td><span class="dot bad"></span>At risk</td>
+          <td>Payment library 3 major versions behind; known CVE patched upstream 14 months ago.</td>
+          <td>1 person</td>
+        </tr>
+        <tr>
+          <td class="repo">customer-portal</td>
+          <td><span class="dot warn"></span>Watch</td>
+          <td>No tests around billing logic — every change is a gamble nobody knows they're taking.</td>
+          <td>2 people</td>
+        </tr>
+        <tr>
+          <td class="repo">mobile-app</td>
+          <td><span class="dot ok"></span>Healthy</td>
+          <td>Quick win: CI takes 40 minutes; a one-day fix brings it under 10.</td>
+          <td>3 people</td>
+        </tr>
+      </table>
+      <p class="foot">Illustrative sample — your report ranks every repository you own, in this format, in plain language.</p>
+    </div>
+    <p class="report-cap">Page four of a real deliverable's format: the scorecard your engineers and your accountant can both read.</p>
+  </div>
+
+  <section class="story">
+    <div class="wrap narrow">
+      <p class="eyebrow">Why I offer this</p>
+      <h2>I ran it on my own company first.</h2>
+      <p>
+        I'm the founder and CTO of a fintech that moves real money. This month I
+        audited every repository in our organization — dependency health, security
+        exposure, documentation, test coverage, single points of failure — the
+        works. It's the kind of review most companies never do, because done by
+        hand it takes a consultancy weeks and costs five figures.
+      </p>
+      <p class="pull">
+        I build and run production systems with AI agents daily. That's what makes
+        a weeks-long audit deliverable in days — the sweep is automated, the
+        judgment is mine.
+      </p>
+      <p>
+        The AI does the reading: every repo, every dependency manifest, every
+        commit pattern. I do the thinking: what actually matters, in what order,
+        and what it means for <em>your</em> business. You get the coverage of a
+        machine with the judgment of someone who ships.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">What you receive</p>
+      <h2>One document. Everything ranked.</h2>
+      <div class="features">
+        <div class="feature">
+          <h3>Executive summary</h3>
+          <p>Two pages in plain English. What you own, what it's worth
+             operationally, and the three decisions you should make this
+             quarter. No jargon, no hedging.</p>
+        </div>
+        <div class="feature">
+          <h3>Repo-by-repo scorecard</h3>
+          <p>Every repository scored: activity, documentation, tests, CI,
+             dependency age, license exposure, secrets hygiene, and who
+             actually understands it.</p>
+        </div>
+        <div class="feature">
+          <h3>Ranked risk register</h3>
+          <p>What could actually hurt you, in order — unpatched dependencies,
+             single points of failure, keys in history, code nobody can
+             maintain. Ranked by consequence, not by count.</p>
+        </div>
+        <div class="feature">
+          <h3>Quick wins</h3>
+          <p>The list of things fixable in a day each — separated from the
+             structural work, so momentum starts immediately.</p>
+        </div>
+        <div class="feature">
+          <h3>AI-readiness roadmap</h3>
+          <p>Where AI-assisted development would pay off first in your
+             codebase, and what hygiene it needs to be safe — the part no
+             traditional audit includes.</p>
+        </div>
+        <div class="feature">
+          <h3>The walkthrough</h3>
+          <p>A live session where we go through the findings together and
+             your team can push back. The report is yours to keep either
+             way.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="own">
+    <div class="wrap narrow">
+      <p class="eyebrow">Your code stays yours</p>
+      <h2>Read-only. Confidential. Then deleted.</h2>
+      <p>
+        The audit needs nothing more than <strong>read-only access</strong> — a
+        scoped token you can revoke the moment we're done. I'll sign your NDA or
+        bring mine. Working copies are <strong>deleted after delivery</strong>;
+        what remains is your report, in your hands.
+      </p>
+      <p>
+        And a line you should hear from anyone who reads your code: this is an
+        engineering health audit with security screening, not a formal
+        penetration test. Where your risk profile warrants one, the report says
+        so and I'll point you to specialists who do that work well.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">How it works</p>
+      <h2>Access to answers in about a week</h2>
+      <div class="steps">
+        <div class="step">
+          <h3>The call</h3>
+          <p>Thirty minutes, free. What you have, what worries you, and what
+             you want to be true in six months. If an audit isn't the right
+             move, I'll say so.</p>
+        </div>
+        <div class="step">
+          <h3>The access</h3>
+          <p>You grant a read-only token — I'll walk you through it, it takes
+             minutes. NDA signed before anything is read.</p>
+        </div>
+        <div class="step">
+          <h3>The audit</h3>
+          <p>The sweep runs, then I read what matters and rank everything by
+             consequence. Days, not weeks.</p>
+          <span class="price">Solo / small: from US$1,500 · Organizations: from US$5,000</span>
+        </div>
+        <div class="step">
+          <h3>The walkthrough</h3>
+          <p>We go through it together. You leave with the report, the ranked
+             list, and the quick wins — and I can quote the fixes if you want
+             them done.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="fit-cols">
+        <div>
+          <h3>Who this fits</h3>
+          <ul>
+            <li>Founders who paid an agency — and want to know what they got</li>
+            <li>Owners whose developer or CTO moved on</li>
+            <li>Buyers and investors sizing up a small acquisition</li>
+            <li>Teams inheriting a codebase they didn't write</li>
+            <li>Organizations that want AI leverage but don't know where to start</li>
+          </ul>
+        </div>
+        <div class="not">
+          <h3>What this is not</h3>
+          <ul>
+            <li>Not a formal penetration test — where you need one, the report
+                says so and names the kind of specialist to hire.</li>
+            <li>Not a rewrite pitch — most findings are fixes, not projects,
+                and the report says which is which.</li>
+            <li>Not a scare document — healthy things are called healthy.
+                The ranking is the value.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="final">
+    <div class="wrap">
+      <p class="eyebrow">Start</p>
+      <h2>Find out what you own.</h2>
+      <p class="lede">Tell me roughly what you have — how many repositories,
+         who built it, what's keeping you up at night. I'll tell you what the
+         audit would cover and quote it flat.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="https://calendly.com/jabari-ennis-c7c">Book the 30-minute call</a>
+        <a class="btn btn-ghost" href="mailto:hi@bobodread.com?subject=Engineering%20Audit">hi@bobodread.com</a>
+      </div>
+      <p class="alt">Need software built, not audited? <a href="./relationship-os.html">Bespoke builds are the other thing I do.</a></p>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <footer>
+      <span>Built in Jamaica. Pointed at sovereignty.</span>
+      <span>
+        <a href="./index.html">bobodread.com</a> ·
+        <a href="mailto:hi@bobodread.com">hi@bobodread.com</a> ·
+        <a href="https://www.linkedin.com/in/jabariennis/">LinkedIn</a>
+      </span>
+    </footer>
+  </div>
+
+</body>
+</html>
