@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Engineering Health Audit — know what you own · Jabari Ennis</title>
-  <meta name="description" content="A fixed-price, plain-language audit of your codebase: what's healthy, what's risky, what to fix first, and where AI-assisted development would pay off — delivered in days.">
+  <meta name="description" content="A fixed-price review of all the software you own, in plain English: what's solid, what's risky, what to fix first, and where AI would pay off — delivered in days.">
 
   <meta property="og:title" content="The Engineering Health Audit">
-  <meta property="og:description" content="You paid for the code. Do you know what you own? A fixed-price, plain-language codebase audit, delivered in days.">
+  <meta property="og:description" content="You paid for the code. Do you know what you own? A fixed-price review of all the software you own, in plain English, delivered in days.">
   <meta property="og:image" content="https://bobodread.com/photo.png">
   <meta property="og:url" content="https://bobodread.com/audit.html">
   <meta name="twitter:card" content="summary_large_image">
@@ -184,15 +184,15 @@
       <p class="eyebrow">The Engineering Health Audit</p>
       <h1>You paid for the code. Do you know <em>what you own</em>?</h1>
       <p class="lede">
-        A fixed-price, plain-language audit of your codebase — every repository,
-        read and ranked. What's healthy, what's quietly rotting, what could hurt
-        you, what to fix first, and where AI could start pulling its weight.
-        Delivered in days, written so an owner can act on it.
+        A fixed-price review of all the software you own, in plain English.
+        What's solid, what's quietly falling behind, what could hurt you, what
+        to fix first — and where AI could start pulling its weight. Delivered
+        in days, written so an owner can act on it.
       </p>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://calendly.com/jabari-ennis-c7c">Book the 30-minute call</a>
         <a class="btn btn-ghost" href="mailto:hi@bobodread.com?subject=Engineering%20Audit">hi@bobodread.com</a>
-        <span class="cta-note">The call is free. Read-only access is all the audit needs.</span>
+        <span class="cta-note">The call is free. I only need permission to read your code — never to change it.</span>
       </div>
     </div>
   </header>
@@ -200,34 +200,34 @@
   <div class="wrap report-wrap">
     <div class="report">
       <div class="rhead"><span>Engineering Health Audit</span><span>Repo scorecard · p.4</span></div>
-      <h3>34 repositories, ranked by risk</h3>
+      <h3>34 projects, ranked by risk</h3>
       <table>
         <tr>
-          <th>Repository</th>
+          <th>Project</th>
           <th>Health</th>
           <th>Top finding</th>
-          <th>Bus factor</th>
+          <th>Who understands it</th>
         </tr>
         <tr>
           <td class="repo">payments-api</td>
           <td><span class="dot bad"></span>At risk</td>
-          <td>Payment library 3 major versions behind; known CVE patched upstream 14 months ago.</td>
+          <td>Built on a payment component with a publicly known security hole — the fix has existed for 14 months; your copy doesn't have it.</td>
           <td>1 person</td>
         </tr>
         <tr>
           <td class="repo">customer-portal</td>
           <td><span class="dot warn"></span>Watch</td>
-          <td>No tests around billing logic — every change is a gamble nobody knows they're taking.</td>
+          <td>Nothing automatically checks the billing math — every change is a gamble nobody knows they're taking.</td>
           <td>2 people</td>
         </tr>
         <tr>
           <td class="repo">mobile-app</td>
           <td><span class="dot ok"></span>Healthy</td>
-          <td>Quick win: CI takes 40 minutes; a one-day fix brings it under 10.</td>
+          <td>Quick win: checking each change takes 40 minutes of waiting; a one-day fix makes it 10.</td>
           <td>3 people</td>
         </tr>
       </table>
-      <p class="foot">Illustrative sample — your report ranks every repository you own, in this format, in plain language.</p>
+      <p class="foot">Illustrative sample — your report ranks every piece of software you own, in this format, in this language.</p>
     </div>
     <p class="report-cap">Page four of a real deliverable's format: the scorecard your engineers and your accountant can both read.</p>
   </div>
@@ -238,10 +238,10 @@
       <h2>I ran it on my own company first.</h2>
       <p>
         I'm the founder and CTO of a fintech that moves real money. This month I
-        audited every repository in our organization — dependency health, security
-        exposure, documentation, test coverage, single points of failure — the
-        works. It's the kind of review most companies never do, because done by
-        hand it takes a consultancy weeks and costs five figures.
+        reviewed every piece of software my own company has built — how current it
+        is, where it's exposed, what's written down, what's tested, and what only
+        one person understands. It's the kind of review most companies never do,
+        because done by hand it takes a consultancy weeks and costs five figures.
       </p>
       <p class="pull">
         I build and run production systems with AI agents daily. That's what makes
@@ -249,10 +249,10 @@
         judgment is mine.
       </p>
       <p>
-        The AI does the reading: every repo, every dependency manifest, every
-        commit pattern. I do the thinking: what actually matters, in what order,
-        and what it means for <em>your</em> business. You get the coverage of a
-        machine with the judgment of someone who ships.
+        The AI does the reading: every project, every part it's built on, every
+        pattern in how it's been looked after. I do the thinking: what actually
+        matters, in what order, and what it means for <em>your</em> business. You
+        get the coverage of a machine with the judgment of someone who ships.
       </p>
     </div>
   </section>
@@ -269,16 +269,16 @@
              quarter. No jargon, no hedging.</p>
         </div>
         <div class="feature">
-          <h3>Repo-by-repo scorecard</h3>
-          <p>Every repository scored: activity, documentation, tests, CI,
-             dependency age, license exposure, secrets hygiene, and who
-             actually understands it.</p>
+          <h3>Project-by-project scorecard</h3>
+          <p>Every piece of software scored: is it maintained? Written down?
+             Tested? How old are the parts it's built on? And who actually
+             understands it?</p>
         </div>
         <div class="feature">
-          <h3>Ranked risk register</h3>
-          <p>What could actually hurt you, in order — unpatched dependencies,
-             single points of failure, keys in history, code nobody can
-             maintain. Ranked by consequence, not by count.</p>
+          <h3>Ranked risk list</h3>
+          <p>What could actually hurt you, in order — known security holes
+             left unfixed, things only one person can repair, passwords saved
+             where they shouldn't be. Ranked by consequence, not by count.</p>
         </div>
         <div class="feature">
           <h3>Quick wins</h3>
@@ -287,8 +287,8 @@
         </div>
         <div class="feature">
           <h3>AI-readiness roadmap</h3>
-          <p>Where AI-assisted development would pay off first in your
-             codebase, and what hygiene it needs to be safe — the part no
+          <p>Where AI could start doing real work on your software first,
+             and what groundwork it needs to be safe — the part no
              traditional audit includes.</p>
         </div>
         <div class="feature">
@@ -306,10 +306,11 @@
       <p class="eyebrow">Your code stays yours</p>
       <h2>Read-only. Confidential. Then deleted.</h2>
       <p>
-        The audit needs nothing more than <strong>read-only access</strong> — a
-        scoped token you can revoke the moment we're done. I'll sign your NDA or
-        bring mine. Working copies are <strong>deleted after delivery</strong>;
-        what remains is your report, in your hands.
+        The audit needs nothing more than <strong>permission to read — never to
+        change</strong> — and you can switch that access off the moment we're
+        done. I'll sign your NDA or bring mine. My working copies are
+        <strong>deleted after delivery</strong>; what remains is your report, in
+        your hands.
       </p>
       <p>
         And a line you should hear from anyone who reads your code: this is an
@@ -333,8 +334,8 @@
         </div>
         <div class="step">
           <h3>The access</h3>
-          <p>You grant a read-only token — I'll walk you through it, it takes
-             minutes. NDA signed before anything is read.</p>
+          <p>You grant read-only permission — I'll walk you through it, it
+             takes minutes. NDA signed before anything is read.</p>
         </div>
         <div class="step">
           <h3>The audit</h3>
@@ -384,7 +385,7 @@
     <div class="wrap">
       <p class="eyebrow">Start</p>
       <h2>Find out what you own.</h2>
-      <p class="lede">Tell me roughly what you have — how many repositories,
+      <p class="lede">Tell me roughly what you have — what the software does,
          who built it, what's keeping you up at night. I'll tell you what the
          audit would cover and quote it flat.</p>
       <div class="cta-row">
