@@ -5,7 +5,8 @@ not a hosting platform. There is no CI.
 
 - Content lives at `/opt/stack/bobodread.com/` on 206.189.139.60 (mounted into
   the caddy container at /srv/bobodread.com).
-- To deploy: `scp index.html root@206.189.139.60:/opt/stack/bobodread.com/`
+- Deploy the full public asset set listed below; homepage-only uploads are
+  insufficient for this version.
 - Redirects are Caddy `redir` rules in `/opt/stack/caddy/Caddyfile` (the
   bobodread.com site block), then `docker exec caddy caddy reload --config
   /etc/caddy/Caddyfile`. The offer pages (/audit, /relationship-os) 301 to
@@ -78,3 +79,25 @@ Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
   and removing the footer slogan. No new policy claims were introduced.
 - Move legacy public backups and `.bak` files outside the web root on launch.
 - Keep webhook and existing services redirects intact.
+
+## Production release — 20 October 2026
+
+Deployed successfully to https://bobodread.com/ after review.
+Rollback backup on the droplet: `/opt/backups/bobodread/20261020-205953/`.
+`site/` contains the pre-launch web root; `Caddyfile` contains the pre-launch
+configuration; `launch.json` records deployed asset hashes and retired paths.
+These backups are outside the public web directory.
+
+Verified homepage, media, privacy, CSS, portrait, social card, clean-URL
+redirects, retired-key redirect, and 404s for old public backups. Existing
+service redirects remain intact. Live asset bytes match the reviewed files.
+Twelve browser checks covered mobile/desktop and light/dark mode without
+page errors, name matches, missing images, or horizontal overflow. Production
+has no staging noindex headers or metadata.
+
+To roll back, restore the backed-up public files into the existing web-root
+directory (it is bind-mounted; do not replace the directory). Restore the
+Caddyfile contents in place, validate with `docker exec caddy caddy validate
+--config /etc/caddy/Caddyfile --adapter caddyfile`, then reload Caddy. Keep
+name-bearing historical backups and the old key outside the web root unless
+the operator specifically requests their restoration.
