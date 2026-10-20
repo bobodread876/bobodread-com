@@ -14,6 +14,10 @@ not a hosting platform. There is no CI.
 ## Revamp staging (review before production)
 
 Branch: `bobodread-sharpen`. Cloudflare Pages project: `bobodread-review`.
+Review URL: https://bobodread-review.pages.dev/
+The review project uses `bobodread-sharpen` as its default deployment branch.
+Cloudflare calls this its production environment; it is staging for this site,
+with no connection to the actual bobodread.com production host.
 This is a separate preview host; it does not serve bobodread.com and has no
 custom domain attached. No Git-triggered production deployment is configured.
 
