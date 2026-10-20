@@ -35,7 +35,7 @@ These are preview-only. Production HTML keeps its bobodread.com canonicals.
 
 Production remains on Caddy. Deploy the complete asset set together:
 `index.html`, `media.html`, `style.css`, `photo.png`,
-`social-card.png`, and `404.html`. Do not upload the preview directory or its staging headers.
+`social-card.png`, `404.html`, and `privacy/index.html`. Do not upload the preview directory or its staging headers.
 Take a backup of the existing site files and Caddy configuration first.
 
 The new `/media` links require the following additions inside the existing
@@ -44,7 +44,13 @@ bobodread.com Caddy site block (preserve all existing rules and handlers):
 ```caddyfile
 redir /media.html /media permanent
 redir /index.html / permanent
+redir /pgp.asc /#contact temporary
 rewrite /media /media.html
+
+handle_errors {
+    rewrite * /404.html
+    file_server
+}
 ```
 
 Validate the Caddy configuration before reloading. After promotion, verify
@@ -63,3 +69,12 @@ Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
 - Melissa stays in the media archive; no new uptime or agent claims were added.
 - Release/repository totals were removed in favor of direct code/release links.
 - Use Dread throughout the site and social card. Keep copy factual; omit slogans.
+
+## Launch checks — 20 October 2026
+
+- Project, Nostr, and donation URLs returned HTTP 200. Email MX records point
+  to Proton Mail; inbox delivery and Signal ownership were not tested.
+- Retained the existing privacy policy, changing its operator name to Dread
+  and removing the footer slogan. No new policy claims were introduced.
+- Move legacy public backups and `.bak` files outside the web root on launch.
+- Keep webhook and existing services redirects intact.
