@@ -34,7 +34,7 @@ These are preview-only. Production HTML keeps its bobodread.com canonicals.
 ### Production promotion — only after review
 
 Production remains on Caddy. Deploy the complete asset set together:
-`index.html`, `media.html`, `style.css`, `photo.png`, `pgp.asc`, and
+`index.html`, `media.html`, `style.css`, `photo.png`,
 `social-card.png`, and `404.html`. Do not upload the preview directory or its staging headers.
 Take a backup of the existing site files and Caddy configuration first.
 
@@ -48,7 +48,9 @@ rewrite /media /media.html
 ```
 
 Validate the Caddy configuration before reloading. After promotion, verify
-`/`, `/media`, both legacy redirects, CSS, portrait, social card, and PGP file.
+`/`, `/media`, both legacy redirects, CSS, portrait, and social card. Remove the old deployed `pgp.asc`: its
+identity fields contain the name removed from the site. The fingerprint stays
+in the contact section; the source key remains unmodified in Git.
 Keep the previous asset set and config available for rollback. Do not copy
 Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
 
@@ -56,6 +58,8 @@ Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
 
 - Patoo copy describes the existing public ideas and skills pages. Confirm
   current tools and actual daily workflows before making stronger claims.
-- Existing email and booking addresses are retained pending a contact decision.
+- The existing email address is retained. Name-bearing booking, profile, and
+  services links were removed during editorial review.
 - Melissa stays in the media archive; no new uptime or agent claims were added.
 - Release/repository totals were removed in favor of direct code/release links.
+- Use Dread throughout the site and social card. Keep copy factual; omit slogans.
