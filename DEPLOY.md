@@ -1,7 +1,7 @@
 # Deploying bobodread.com
 
-The site is served by Caddy (file_server) on the islandbitcoin-server droplet,
-not a hosting platform. There is no CI.
+The site is served by Caddy (file_server) on the islandbitcoin-server droplet.
+There is no CI and no hosting platform.
 
 - Content lives at `/opt/stack/bobodread.com/` on 206.189.139.60 (mounted into
   the caddy container at /srv/bobodread.com).
@@ -32,7 +32,7 @@ wrangler pages deploy .preview --project-name bobodread-review --branch bobodrea
 The staging package adds `noindex` headers and a crawl-disallowing robots.txt.
 These are preview-only. Production HTML keeps its bobodread.com canonicals.
 
-### Production promotion — only after review
+### Production promotion: only after review
 
 Production remains on Caddy. Deploy the complete asset set together:
 `index.html`, `media.html`, `style.css`, `photo.png`,
@@ -71,7 +71,7 @@ Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
 - Release/repository totals were removed in favor of direct code/release links.
 - Use Dread throughout the site and social card. Keep copy factual; omit slogans.
 
-## Launch checks — 20 October 2026
+## Launch checks: 20 October 2026
 
 - Project, Nostr, and donation URLs returned HTTP 200. Email MX records point
   to Proton Mail; inbox delivery and Signal ownership were not tested.
@@ -80,7 +80,7 @@ Cloudflare `_redirects` to Caddy; Caddy does not interpret that file.
 - Move legacy public backups and `.bak` files outside the web root on launch.
 - Keep webhook and existing services redirects intact.
 
-## Production release — 20 October 2026
+## Production release: 20 October 2026
 
 Deployed successfully to https://bobodread.com/ after review.
 Rollback backup on the droplet: `/opt/backups/bobodread/20261020-205953/`.
